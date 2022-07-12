@@ -1,0 +1,51 @@
+{
+  "name": "epoch",
+  "displayName": "hlucco-epoch-converter",
+  "version": "0.0.1",
+  "publisher": "hlucco",
+  "description": "Epoch converter extension",
+  "engines": {
+    "vscode": "^1.22.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.epochConvert"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.epochConvert",
+        "title" : "Epoch Converter"
+      }
+    ],
+    "keybindings" : [
+      {
+        "command": "extension.epochConvert",
+        "key" : "ctrl+alt+e",
+        "mac" : "cmd+option+e"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint . --ext ts, .tsx",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "@types/vscode": "^1.34.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "eslint": "^8.13.0",
+    "typescript": "^4.7.4"
+  },
+  "author": "hlucco",
+  "license": "MIT",
+  "dependencies": {
+    "vscode": "^1.1.37"
+  }
+}
