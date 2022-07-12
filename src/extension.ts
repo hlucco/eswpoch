@@ -4,7 +4,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     console.log("extension has been activated");
 
-	const disposable = vscode.commands.registerCommand('extension.epochConvert', () => {
+	const eswpoch = vscode.commands.registerCommand('extension.epochConvert', () => {
 
         // Specification:
         // on key press or activation of the command ctrl+alt+e
@@ -17,24 +17,20 @@ export function activate(context: vscode.ExtensionContext) {
         // one of them to cycle out the values (ie selected conversion goes inline where
         // the old input value was)
         
-        vscode.window.showQuickPick(["ms: 1657606717", "ns: 165760671700000", "s: 164504"])
-        vscode.window.showInformationMessage("this is still here for now")
+        const position = vscode.window.activeTextEditor?.selection.active;
+        if (position !== undefined) {
+            const value = vscode.window.activeTextEditor?.document.lineAt(position)
+
+            if (value !== undefined) {
+                const options = ["a", "b", "c"]
+                const result = vscode.window.showQuickPick(options, {
+                    placeHolder: value.text,
+                })
+            }
+            
+        }
 
 	});
 
-    const epochProvider = vscode.languages.registerCompletionItemProvider('python', {
-
-        provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
-
-            // starting small
-            const simpleCompletion = new vscode.CompletionItem('Hello World');
-
-            return [
-                simpleCompletion
-            ]
-        }
-
-    })
-
-    context.subscriptions.push(disposable, epochProvider);
+    context.subscriptions.push(eswpoch);
 }
