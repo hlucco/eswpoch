@@ -44,5 +44,6 @@
   },
   "author": "hlucco",
   "license": "MIT",
-  "repository": "https://www.github.com/hlucco/eswpoch"
+  "repository": "https://www.github.com/hlucco/eswpoch",
+  "icon": "clock-icon.png"
 }
