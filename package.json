@@ -1,11 +1,11 @@
 {
   "name": "epoch",
-  "displayName": "hlucco-epoch-converter",
-  "version": "0.0.1",
+  "displayName": "Eswpoch (Epoch Converter)",
+  "version": "1.0.0",
   "publisher": "hlucco",
-  "description": "Epoch converter extension",
+  "description": "Lightweight VS Code plugin for executing inline swaps between timestamps and viewing corresponding GMT time.",
   "engines": {
-    "vscode": "^1.22.0"
+    "vscode": "^1.34.0"
   },
   "categories": [
     "Other"
@@ -44,7 +44,5 @@
   },
   "author": "hlucco",
   "license": "MIT",
-  "dependencies": {
-    "vscode": "^1.1.37"
-  }
+  "repository": "https://www.github.com/hlucco/eswpoch"
 }

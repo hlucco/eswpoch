@@ -5,7 +5,7 @@ Brings up a quick pick menu which allows swapping between units and shows the co
 ## Example
 
 
-![example gif](./example.gif)
+![example gif](https://raw.githubusercontent.com/hlucco/eswpoch/master/example.gif)
 
 ## Default Keybindings
 
