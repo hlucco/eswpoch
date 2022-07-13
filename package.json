@@ -11,19 +11,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.epochConvert"
+    "onCommand:eswpoch.epochConvert"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/eswpoch.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.epochConvert",
+        "command": "eswpoch.epochConvert",
         "title": "Epoch Converter"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.epochConvert",
+        "command": "eswpoch.epochConvert",
         "key": "ctrl+alt+e"
       }
     ]
