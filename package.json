@@ -18,14 +18,13 @@
     "commands": [
       {
         "command": "extension.epochConvert",
-        "title" : "Epoch Converter"
+        "title": "Epoch Converter"
       }
     ],
-    "keybindings" : [
+    "keybindings": [
       {
         "command": "extension.epochConvert",
-        "key" : "ctrl+alt+e",
-        "mac" : "cmd+option+e"
+        "key": "ctrl+alt+e"
       }
     ]
   },

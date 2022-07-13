@@ -1,10 +1,15 @@
 import * as vscode from 'vscode'
 
+function generateConversions(initialValue: number): string[] {
+    let result = ["test"]
+    return result;
+}
+
 export function activate(context: vscode.ExtensionContext) {
 
     console.log("extension has been activated");
 
-	const eswpoch = vscode.commands.registerCommand('extension.epochConvert', () => {
+    const eswpoch = vscode.commands.registerCommand('extension.epochConvert', () => {
 
         // Specification:
         // on key press or activation of the command ctrl+alt+e
@@ -16,21 +21,22 @@ export function activate(context: vscode.ExtensionContext) {
         // quick pick and change nothing, or cycle through the options and press enter on
         // one of them to cycle out the values (ie selected conversion goes inline where
         // the old input value was)
-        
+
         const position = vscode.window.activeTextEditor?.selection.active;
         if (position !== undefined) {
             const value = vscode.window.activeTextEditor?.document.lineAt(position)
 
             if (value !== undefined) {
-                const options = ["a", "b", "c"]
+
+                const options = generateConversions(Number.parseInt(value.text));
                 const result = vscode.window.showQuickPick(options, {
                     placeHolder: value.text,
                 })
             }
-            
+
         }
 
-	});
+    });
 
     context.subscriptions.push(eswpoch);
 }
