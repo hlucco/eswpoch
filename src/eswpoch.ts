@@ -7,7 +7,7 @@ type UnitObject = {
     ns: number
 }
 
-function generateConversions(initialValue: number): string[] {
+function generateConversions(initialValue: number) : any[] {
     const digits = initialValue.toString().length;
 
     // <= 11 s <= 14 ms <= 16 mcs else ns
@@ -52,13 +52,36 @@ function generateConversions(initialValue: number): string[] {
         }
     }
 
-    let result: string[] = [];
+    let result = [];
+    let msValue = 0
 
     Object.entries(conversions[unit]).forEach((entries: [string, number]) => {
         const convValue = entries[1];
         const convUnit = entries[0];
+        
+        if (convUnit === 'ms') {
+            msValue = initialValue * convValue
+        }
+
         result.push(`${convUnit} : ${(initialValue * convValue).toFixed().toString()}`);
     })
+
+    // make a separator for the 'File' group
+    const timezoneSeperator = {
+        label: 'Timezones',
+        kind: vscode.QuickPickItemKind.Separator
+    };
+
+    result.push(timezoneSeperator)
+
+    const additionalTimezones = vscode.workspace.getConfiguration("eswpoch").get("timezones") as string[]
+
+    if (additionalTimezones !== undefined) {
+        additionalTimezones.forEach((timezone: string) => {
+            let converted = new Date(msValue).toLocaleString('en-US', {timeZone : timezone})
+            result.push(`${timezone} : ${converted}`)
+        })
+    }
 
     return result;
 }
@@ -81,7 +104,7 @@ function getToken(line: string, pos: number): string {
 
 export function activate(context: vscode.ExtensionContext) {
 
-    const eswpoch = vscode.commands.registerCommand('eswpoch.epochConvert', async () => {
+    const eswpochConvert = vscode.commands.registerCommand('eswpoch.epochConvert', async () => {
         
         const editor = vscode.window.activeTextEditor
         if (editor !== undefined) {
@@ -109,16 +132,24 @@ export function activate(context: vscode.ExtensionContext) {
 
                     const result = await vscode.window.showQuickPick(options, {
                         placeHolder: readableTime,
-                        title: "Epoch Converter"
+                        title: "Eswpoch"
                     }) || ""
+                    
+                    const splitPoint = result.indexOf(":")
+                    let insertValue = result.substring(splitPoint+1).trim()
 
-                    const insertValue = (result.split(":")[1] || valueString).trim()
+                    if (result.split(":").length > 2) {
+                        insertValue = `"${insertValue}"`
+                    }
+
                     const anchor = new vscode.Position(selectedLine.lineNumber, startIdx)
                     const active = new vscode.Position(selectedLine.lineNumber, startIdx + valueString.length)
                     const selection = new vscode.Selection(anchor, active)
 
                     editor.edit(editorBuilder => {
-                        editorBuilder.replace(selection, insertValue)
+                        if (insertValue !== "" ) {
+                            editorBuilder.replace(selection, insertValue)
+                        }
                     })
                 }
             }
@@ -126,5 +157,23 @@ export function activate(context: vscode.ExtensionContext) {
 
     });
 
-    context.subscriptions.push(eswpoch);
+    const eswopchAddTimezone = vscode.commands.registerCommand('eswpoch.addTimezone', async () => {
+
+        const result = await vscode.window.showInputBox({
+            title : "Add Timezone"
+        })
+
+        if (result !== undefined) {
+            let timezones = [result]
+            const currentTimezones = vscode.workspace.getConfiguration("eswpoch").get("timezones") as string[]
+    
+            if (currentTimezones !== undefined && !currentTimezones.includes(result)) {
+                timezones = [...timezones, ...currentTimezones]
+                vscode.workspace.getConfiguration("eswpoch").update("timezones", timezones, vscode.ConfigurationTarget.Global)
+            }
+
+        }
+    })
+
+    context.subscriptions.push(eswpochConvert, eswopchAddTimezone);
 }

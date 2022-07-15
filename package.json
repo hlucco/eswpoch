@@ -1,7 +1,7 @@
 {
   "name": "epoch",
   "displayName": "Eswpoch (Epoch Converter)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "hlucco",
   "description": "Lightweight VS Code plugin for executing inline swaps between timestamps and viewing corresponding GMT time.",
   "engines": {
@@ -11,20 +11,40 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:eswpoch.epochConvert"
+    "onCommand:eswpoch.epochConvert",
+    "onCommand:eswpoch.addTimezone"
   ],
   "main": "./out/eswpoch.js",
   "contributes": {
     "commands": [
       {
         "command": "eswpoch.epochConvert",
-        "title": "Epoch Converter"
+        "title": "Eswpoch Converter"
+      },
+      {
+        "command": "eswpoch.addTimezone",
+        "title" : "Eswpoch   Add Timezone"
       }
     ],
+    "configuration" : {
+      "title" : "Eswpoch",
+      "properties": {
+        "eswpoch.timezones" : {
+          "type" : "array",
+          "scope": "window",
+          "default" : ["America/Chicago"],
+          "description": "List of timezones that converter will use for displaying readble time."
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "eswpoch.epochConvert",
         "key": "ctrl+alt+e"
+      },
+      {
+        "command": "eswpoch.addTimezone",
+        "key" : "ctrl+alt+t"
       }
     ]
   },
