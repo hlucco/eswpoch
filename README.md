@@ -38,4 +38,6 @@ To configure keybindings add a new object to your `keybindings.json` modifying y
 }
 ```
 
+Neovim port: https://github.com/hlucco/nvim-eswpoch
+
 Version 1.0.1
